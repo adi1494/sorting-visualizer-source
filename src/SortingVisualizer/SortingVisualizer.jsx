@@ -5,7 +5,7 @@ import {getMergeSortAnimations, getBubbleSortAnimations} from '../SortingAlgorit
 
 
 const ARRAY_SIZE = 300;
-const SORTING_SPEED = 3;
+const SORTING_SPEED = 2;
 
 export default class SortingVisualizer extends React.Component {
     constructor(props){
@@ -121,6 +121,15 @@ export default class SortingVisualizer extends React.Component {
 
         return (
             <div className="container">            
+                
+                <div className="button-container">
+                    <button className="button" onClick={() => this.resetArray()}>Generate New Array</button>
+                    <button className="button" onClick={() => this.mergeSort()}>Merge Sort</button>
+                    <button className="button" onClick={() => this.quickSort()}>Quick Sort</button>
+                    <button className="button" onClick={() => this.heapSort()}>Heap Sort</button>
+                    <button className="button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
+                    {/* <button className="button" onClick={() => this.testSortingAlgorithms()}>Test Sorting Algorithm</button> */}
+                </div>
                 <div className="array-container">
                     {array.map((value, idx) => (
                         <div 
@@ -133,15 +142,6 @@ export default class SortingVisualizer extends React.Component {
                             
                         </div>
                     ))}
-                </div>
-                
-                <div className="button-container">
-                    <button className="button" onClick={() => this.resetArray()}>Generate New Array</button>
-                    <button className="button" onClick={() => this.mergeSort()}>Merge Sort</button>
-                    <button className="button" onClick={() => this.quickSort()}>Quick Sort</button>
-                    <button className="button" onClick={() => this.heapSort()}>Heap Sort</button>
-                    <button className="button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
-                    {/* <button className="button" onClick={() => this.testSortingAlgorithms()}>Test Sorting Algorithm</button> */}
                 </div>
             </div>
         );
