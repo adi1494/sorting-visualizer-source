@@ -4,7 +4,8 @@ import {getMergeSortAnimations, getBubbleSortAnimations} from '../SortingAlgorit
 // import { array } from 'prop-types';
 
 
-const ARRAY_SIZE = 50;
+const ARRAY_SIZE = 300;
+const SORTING_SPEED = 3;
 
 export default class SortingVisualizer extends React.Component {
     constructor(props){
@@ -46,13 +47,13 @@ export default class SortingVisualizer extends React.Component {
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
-                }, i * 3);
+                }, i * SORTING_SPEED);
             } else {
                 setTimeout(() => {
                     const [barOne, newHeight] = animations[i];
                     const barOneStyle = arrayBars[barOne].style;
                     barOneStyle.height = `${newHeight}px`;
-                }, i * 3);
+                }, i * SORTING_SPEED);
             }
         }
         
@@ -73,7 +74,7 @@ export default class SortingVisualizer extends React.Component {
         // console.log(this.state.array);
         console.log(animations);
 
-        let lastindex = animations.length-1;
+        // let lastindex = animations.length-1;
         for (let i = 0; i < animations.length; i++){
             const arrayBars = document.getElementsByClassName('array-bar');
             const isColorChange = i % 3  !== 2;

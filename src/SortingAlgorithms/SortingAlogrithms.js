@@ -127,7 +127,7 @@ function bubbleSortHelper (mainArray, animations){
     let sorted = false;
     while (!sorted){
         sorted = true;
-        let max = n-2;
+        // let max = n-2;
         for (let i = 0; i < n-1; i++){
             // console.log(mainArray[i], mainArray[i+1]);
             if(mainArray[i] > mainArray[i+1]){
