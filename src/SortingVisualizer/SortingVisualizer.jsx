@@ -1,11 +1,14 @@
 import React from 'react'
 import './SortingVisualizer.css';
-import {getMergeSortAnimations, getBubbleSortAnimations} from '../SortingAlgorithms/SortingAlogrithms';
+// import {getMergeSortAnimations, getBubbleSortAnimations, getQuickSortAnimations} from '../SortingAlgorithms/SortingAlogrithms';
+import { getMergeSortAnimations } from '../SortingAlgorithms/mergeSort';
+import { getQuickSortAnimations } from '../SortingAlgorithms/quickSort';
+import { getBubbleSortAnimations } from '../SortingAlgorithms/bubbleSort';
 // import { array } from 'prop-types';
 
 
-const ARRAY_SIZE = 300;
-const SORTING_SPEED = 2;
+const ARRAY_SIZE = 150;
+const SORTING_SPEED = 3;
 
 export default class SortingVisualizer extends React.Component {
     constructor(props){
@@ -43,7 +46,7 @@ export default class SortingVisualizer extends React.Component {
                 const [barOne, barTwo] = animations[i];
                 const barOneStyle = arrayBars[barOne].style;
                 const barTwoStyle = arrayBars[barTwo].style;
-                const color = i % 3 === 0 ? 'red' : 'blue';
+                const color = i % 3 === 0 ? 'red' : 'grey';
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
@@ -61,7 +64,48 @@ export default class SortingVisualizer extends React.Component {
     }
 
     quickSort() {
-        
+        // console.log(this.state.array);
+        const animations = getQuickSortAnimations(this.state.array);
+        // console.log(this.state.array);
+        // console.log(animations);
+
+        for (let i = 0; i < animations.length; i++){
+            const arrayBars = document.getElementsByClassName('array-bar');
+            const [k, bar1, bar2] = animations[i];
+            const bar1style = arrayBars[bar1].style;
+            const bar2style = arrayBars[bar2].style;
+            // const setMode = k % 3;
+            if (k === 0){
+                //color swapped
+                setTimeout(() => {
+                    bar1style.backgroundColor = 'blue';
+                    bar2style.backgroundColor = 'blue';
+                }, i * SORTING_SPEED);
+            } else if (k === 1){
+                // swap heights
+                setTimeout(() => {
+                    [bar1style.height, bar2style.height] = [bar2style.height, bar1style.height];
+                }, i * SORTING_SPEED);
+            } else if (k === 2){        
+                // recolor swapped
+                setTimeout(() => {
+                    bar1style.backgroundColor = 'grey';
+                    bar2style.backgroundColor = 'grey';
+                }, i * SORTING_SPEED);
+            } else if (k === 3){
+                // color pivot and compare
+                setTimeout(() => {
+                    bar1style.backgroundColor = 'red';
+                    bar2style.backgroundColor = 'yellow';
+                }, i * SORTING_SPEED)
+            } else if (k === 4){
+                // recolor pivot
+                setTimeout(() => {
+                    bar1style.backgroundColor = 'grey';
+                    bar2style.backgroundColor = 'grey';
+                }, i * SORTING_SPEED);
+            }
+        }
     }
 
     heapSort() {
@@ -82,7 +126,7 @@ export default class SortingVisualizer extends React.Component {
                 const [barOne, barTwo] = animations[i];
                 const barOneStyle = arrayBars[barOne].style;
                 const barTwoStyle = arrayBars[barTwo].style;
-                const color = i % 3 === 0 ? 'red' : 'blue';
+                const color = i % 3 === 0 ? 'red' : 'grey';
                 // const color = 'red';
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
@@ -137,7 +181,7 @@ export default class SortingVisualizer extends React.Component {
                             key={idx}
                             style={{
                                 height: `${value}px`,
-                                backgroundColor: 'blue',
+                                backgroundColor: 'grey',
                         }}>
                             
                         </div>

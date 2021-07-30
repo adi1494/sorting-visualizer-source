@@ -20,7 +20,8 @@
 //     return sortedArray;
 // }
 
-export function getMergeSortAnimations(array) {
+// export
+function getMergeSortAnimations(array) {
     const animations = [];
     if (array.length <= 1) return array;
     const auxiliaryArray = array.slice();
@@ -102,7 +103,21 @@ function doMerge(
     }
 }
 
-export function getBubbleSortAnimations(array){
+// export
+// function getQuickSortAnimations(array){
+//     const animations = [];
+//     if (array.length <= 1) return array;
+//     // const auxiliaryArray = array.slice();
+//     quickSortHelper(array, 0, array.length - 1, animations);
+//     return animations;
+// }
+
+// function quickSortHelper(){
+
+// }
+
+// export
+function getBubbleSortAnimations(array){
     const animations = [];
     if (array.length <= 1) return array;
     // const auxiliaryArray = array.slice();
