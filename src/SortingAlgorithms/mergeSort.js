@@ -1,4 +1,57 @@
-export function getMergeSortAnimations(array) {
+const SORT_SPEED = 3;
+
+export function getMergeSort(array) {
+    // console.log(this.state.array);
+    const animations = getMergeSortAnimations(array);
+    // console.log(this.state.array);
+    // console.log(animations);
+
+    for (let i = 0; i < animations.length; i++) {
+        const arrayBars = document.getElementsByClassName('array-bar');
+        let l = animations[i].length;
+        if (l === 4) {
+            // color boundaries
+            const [k, lobar, midbar, hibar] = animations[i];
+            if (k === 0) {
+                // console.log('coloring');
+                setTimeout(() => {
+                    arrayBars[lobar].style.backgroundColor = 'red';
+                    arrayBars[hibar].style.backgroundColor = 'red';
+                    arrayBars[midbar].style.backgroundColor = 'blue';
+                }, i * SORT_SPEED);
+            } else if (k === 1) {
+                // console.log('uncoloring');
+                setTimeout(() => {
+                    arrayBars[lobar].style.backgroundColor = 'grey';
+                    arrayBars[hibar].style.backgroundColor = 'grey';
+                    arrayBars[midbar].style.backgroundColor = 'grey';
+                }, i * SORT_SPEED);
+            }
+        } else if (l === 3) {
+            // set bar height
+            const [k, bar, height] = animations[i];
+            if (k === 2) {
+                setTimeout(() => {
+                    arrayBars[bar].style.height = `${height}px`;
+                }, i * SORT_SPEED);
+            }
+        } else {
+            // set bar color
+            const [k, bar] = animations[i];
+            if (k === 0) {
+                setTimeout(() => {
+                    arrayBars[bar].style.backgroundColor = 'yellow';
+                }, (i-1) * SORT_SPEED);
+            } else {
+                setTimeout(() => {
+                    arrayBars[bar].style.backgroundColor = 'grey';
+                }, i * SORT_SPEED);
+            }
+        }
+    }
+}
+
+function getMergeSortAnimations(array) {
     const animations = [];
     if (array.length <= 1) return array;
     mergeSortHelper(array, 0, array.length - 1, animations);
