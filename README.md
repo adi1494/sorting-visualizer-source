@@ -2,7 +2,7 @@
 
 Algorithms -
 - [x] merge sort
-- [ ] quick sort
+- [x] quick sort
 - [ ] heap sort
 - [x] bubble sort
 - [ ] selection sort

@@ -1,84 +1,75 @@
 export function getMergeSortAnimations(array) {
     const animations = [];
     if (array.length <= 1) return array;
-    const auxiliaryArray = array.slice();
-    mergeSortHelper(array, 0, array.length - 1, auxiliaryArray, animations);
+    mergeSortHelper(array, 0, array.length - 1, animations);
     return animations;
 }
 
-function mergeSortHelper (
-    mainArray,
+function mergeSortHelper(
+    array,
     lo,
     hi,
-    auxiliaryArray,
     animations,
 ) {
-    if (lo === hi) return;
-    const mid = Math.floor((lo + hi)/2);
-    mergeSortHelper(auxiliaryArray, lo, mid, mainArray, animations);
-    mergeSortHelper(auxiliaryArray, mid+1, hi, mainArray, animations);
-    doMerge(mainArray, lo, mid, hi, auxiliaryArray, animations);
+    if (lo >= hi) return;
+    const mid = Math.floor((lo + hi) / 2);
+    mergeSortHelper(array, lo, mid, animations);
+    mergeSortHelper(array, mid + 1, hi, animations);
+    merge(array, lo, mid, hi, animations);
 }
 
 // my implementation
-
-// Clement's implementation
-function doMerge(
-    mainArray,
+function merge(
+    array,
     lo,
     mid,
     hi,
-    auxiliaryArray,
     animations,
 ) {
-    // let n1 = mid+1-lo, n2 = hi-mid;
-    // const leftarr = [];
-    // const rightarr = [];
-    // for (let i = 0; i < n1; i++) {
-    //     leftarr.push(mainArray[i]);
-    // }
-    // for (let i = 0; i < n1; i++) {
-    //     rightarr.push(mainArray[mid+1+j]);
-    // }
-
-    // let i = 0, j = mid+1, k = lo;
-    // while (i < n1 && j < n2){
-    //     if (leftarr[i] <= rightarr[j]){
-    //         mainArray[k++] = leftarr[i++];
-    //     } else {
-    //         mainArray[k++] = rightarr[j++];
-    //     }
-    // }
-    // while (i < n1){
-    //     mainArray[k++] = leftarr[i++];
-    // }
-    // while (j < n2){
-    //     mainArray[k++] = rightarr[j++];
-    // }
-
-    let i = lo, j = mid+1, k = lo;
-
-    while (i <= mid && j <= hi){
-        animations.push([i, j]);
-        animations.push([i, j]);
-        if (auxiliaryArray[i] <= auxiliaryArray[j]) {
-            animations.push([k, auxiliaryArray[i]]);
-            mainArray[k++] = auxiliaryArray[i++];
+    let len1 = mid + 1 - lo, len2 = hi - mid;
+    animations.push([0, lo, mid, hi]) // color boundaries
+    const left = [], right = [];
+    for (let i = 0; i < len1; i++) {
+        left.push(array[lo + i]);
+        animations.push([0, lo + i]); // color reading elements
+        animations.push([1, lo + i]); // uncolor reading elements
+        animations.push([0, lo, mid, hi]) // color boundaries
+    }
+    for (let j = 0; j < len2; j++) {
+        right.push(array[mid + 1 + j]);
+        animations.push([0, mid + 1 + j]); // color reading elements
+        animations.push([1, mid + 1 + j]); // uncolor reading elements
+        animations.push([0, lo, mid, hi]) // color boundaries
+    }
+    let i = 0, j = 0, k = lo;
+    while (i < len1 && j < len2) {
+        if (left[i] <= right[j]) {
+            animations.push([3, k]); // color setheight
+            animations.push([2, k, left[i]]); // setheight
+            animations.push([4, k]); // uncolor setheight
+            animations.push([0, lo, mid, hi]) // color boundaries
+            array[k++] = left[i++];
         } else {
-            animations.push([k, auxiliaryArray[j]]);
-            mainArray[k++] = auxiliaryArray[j++];
+            animations.push([3, k]); // color setheight
+            animations.push([2, k, right[j]]); // setheight
+            animations.push([4, k]); // uncolor setheight
+            animations.push([0, lo, mid, hi]) // color boundaries
+            array[k++] = right[j++];
         }
     }
-    while (i <= mid){
-        animations.push([i, i]);
-        animations.push([i, i]);
-        animations.push([k, auxiliaryArray[i]]);
-        mainArray[k++] = auxiliaryArray[i++];
+    while (i < len1) {
+        animations.push([3, k]); // color setheight
+        animations.push([2, k, left[i]]); // setheight
+        animations.push([4, k]); // uncolor setheight
+        animations.push([0, lo, mid, hi]) // color boundaries
+        array[k++] = left[i++];
     }
-    while (j <= hi){
-        animations.push([j, j]);
-        animations.push([j, j]);
-        animations.push([k, auxiliaryArray[j]]);
-        mainArray[k++] = auxiliaryArray[j++];
+    while (j < len2) {
+        animations.push([3, k]); // color setheight
+        animations.push([2, k, right[j]]); // setheight
+        animations.push([4, k]); // uncolor setheight
+        animations.push([0, lo, mid, hi]) // color boundaries
+        array[k++] = right[j++];
     }
+    animations.push([1, lo, mid, hi]) // uncolor boundaries
 }
