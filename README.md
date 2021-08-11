@@ -6,4 +6,4 @@ Algorithms -
 - [ ] heap sort
 - [x] bubble sort
 - [x] insertion sort
-- [ ] selection sort
+- [x] selection sort
